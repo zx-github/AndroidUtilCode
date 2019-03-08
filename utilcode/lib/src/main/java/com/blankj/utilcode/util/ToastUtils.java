@@ -43,14 +43,14 @@ public final class ToastUtils {
     private static final Handler HANDLER       = new Handler(Looper.getMainLooper());
     private static final String  NULL          = "null";
 
-    private static IToast iToast;
-    private static int    sGravity     = -1;
-    private static int    sXOffset     = -1;
-    private static int    sYOffset     = -1;
-    private static int    sBgColor     = COLOR_DEFAULT;
-    private static int    sBgResource  = -1;
-    private static int    sMsgColor    = COLOR_DEFAULT;
-    private static int    sMsgTextSize = -1;
+    private static AbsToast iToast;
+    private static int      sGravity     = -1;
+    private static int      sXOffset     = -1;
+    private static int      sYOffset     = -1;
+    private static int      sBgColor     = COLOR_DEFAULT;
+    private static int      sBgResource  = -1;
+    private static int      sMsgColor    = COLOR_DEFAULT;
+    private static int      sMsgTextSize = -1;
 
     private ToastUtils() {
         throw new UnsupportedOperationException("u can't instantiate me...");
@@ -336,14 +336,14 @@ public final class ToastUtils {
 
     static class ToastFactory {
 
-        static IToast makeToast(Context context, CharSequence text, int duration) {
+        static AbsToast makeToast(Context context, CharSequence text, int duration) {
             if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
                 return new SystemToast(makeNormalToast(context, text, duration));
             }
             return new ToastWithoutNotification(makeNormalToast(context, text, duration));
         }
 
-        static IToast newToast(Context context) {
+        static AbsToast newToast(Context context) {
             if (NotificationManagerCompat.from(context).areNotificationsEnabled()) {
                 return new SystemToast(new Toast(context));
             }
@@ -508,7 +508,7 @@ public final class ToastUtils {
         }
     }
 
-    static abstract class AbsToast implements IToast {
+    static abstract class AbsToast {
 
         Toast mToast;
 
@@ -516,53 +516,32 @@ public final class ToastUtils {
             mToast = toast;
         }
 
-        @Override
+        public abstract void show();
+
+        public abstract void cancel();
+
         public void setView(View view) {
             mToast.setView(view);
         }
 
-        @Override
         public View getView() {
             return mToast.getView();
         }
 
-        @Override
         public void setDuration(int duration) {
             mToast.setDuration(duration);
         }
 
-        @Override
         public void setGravity(int gravity, int xOffset, int yOffset) {
             mToast.setGravity(gravity, xOffset, yOffset);
         }
 
-        @Override
         public void setText(int resId) {
             mToast.setText(resId);
         }
 
-        @Override
         public void setText(CharSequence s) {
             mToast.setText(s);
         }
-    }
-
-    interface IToast {
-
-        void show();
-
-        void cancel();
-
-        void setView(View view);
-
-        View getView();
-
-        void setDuration(int duration);
-
-        void setGravity(int gravity, int xOffset, int yOffset);
-
-        void setText(@StringRes int resId);
-
-        void setText(CharSequence s);
     }
 }
