@@ -10,6 +10,7 @@ import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.content.FileProvider;
+import android.text.TextUtils;
 import android.util.Log;
 
 import java.io.File;
@@ -70,12 +71,16 @@ public final class UriUtils {
                 Log.d("UriUtils", uri.toString() + " parse failed. -> 1");
                 return null;
             } else if ("com.android.providers.downloads.documents".equals(authority)) {
-                final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(
-                        Uri.parse("content://downloads/public_downloads"),
-                        Long.valueOf(id)
-                );
-                return getFileFromUri(contentUri, 2);
+                String id = DocumentsContract.getDocumentId(uri);
+                if (!TextUtils.isEmpty(id)) {
+                    final Uri contentUri = ContentUris.withAppendedId(
+                            Uri.parse(Environment.DIRECTORY_DOWNLOADS),
+                            Long.valueOf(id)
+                    );
+                    return getFileFromUri(contentUri, 2);
+                }
+                Log.d("UriUtils", uri.toString() + " parse failed. -> 3");
+                return null;
             } else if ("com.android.providers.media.documents".equals(authority)) {
                 final String docId = DocumentsContract.getDocumentId(uri);
                 final String[] split = docId.split(":");
@@ -88,22 +93,22 @@ public final class UriUtils {
                 } else if ("audio".equals(type)) {
                     contentUri = MediaStore.Audio.Media.EXTERNAL_CONTENT_URI;
                 } else {
-                    Log.d("UriUtils", uri.toString() + " parse failed. -> 3");
+                    Log.d("UriUtils", uri.toString() + " parse failed. -> 4");
                     return null;
                 }
                 final String selection = "_id=?";
                 final String[] selectionArgs = new String[]{split[1]};
-                return getFileFromUri(contentUri, selection, selectionArgs, 4);
+                return getFileFromUri(contentUri, selection, selectionArgs, 5);
             } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-                return getFileFromUri(uri, 5);
+                return getFileFromUri(uri, 6);
             } else {
-                Log.d("UriUtils", uri.toString() + " parse failed. -> 6");
+                Log.d("UriUtils", uri.toString() + " parse failed. -> 7");
                 return null;
             }
         } else if (ContentResolver.SCHEME_CONTENT.equals(scheme)) {
-            return getFileFromUri(uri, 7);
+            return getFileFromUri(uri, 8);
         } else {
-            Log.d("UriUtils", uri.toString() + " parse failed. -> 8");
+            Log.d("UriUtils", uri.toString() + " parse failed. -> 9");
             return null;
         }
     }
@@ -116,13 +121,14 @@ public final class UriUtils {
                                        final String selection,
                                        final String[] selectionArgs,
                                        final int code) {
-        final Cursor cursor = Utils.getApp().getContentResolver().query(
-                uri, new String[]{"_data"}, selection, selectionArgs, null);
-        if (cursor == null) {
-            Log.d("UriUtils", uri.toString() + " parse failed(cursor is null). -> " + code);
-            return null;
-        }
+        Cursor cursor = null;
         try {
+            cursor = Utils.getApp().getContentResolver().query(
+                    uri, new String[]{"_data"}, selection, selectionArgs, null);
+            if (cursor == null) {
+                Log.d("UriUtils", uri.toString() + " parse failed(cursor is null). -> " + code);
+                return null;
+            }
             if (cursor.moveToFirst()) {
                 final int columnIndex = cursor.getColumnIndex("_data");
                 if (columnIndex > -1) {
@@ -139,7 +145,9 @@ public final class UriUtils {
             Log.d("UriUtils", uri.toString() + " parse failed. -> " + code);
             return null;
         } finally {
-            cursor.close();
+            if (cursor != null) {
+                cursor.close();
+            }
         }
     }
 }
