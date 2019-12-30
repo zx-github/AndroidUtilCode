@@ -1,6 +1,8 @@
-![logo][logo]
+[![logo][logo]](https://github.com/Blankj/AndroidUtilCode)
 
-[![auc][aucSvg]][auc] [![api][apiSvg]][api] [![build][buildSvg]][build] [![Insight][insightSvg]][insight] [![License][licenseSvg]][license]
+[![frame][frame]](https://github.com/Blankj/AucFrameTemplate)
+
+[![auc][aucSvg]][auc] [![result][apiSvg]][result] [![build][buildSvg]][build] [![License][licenseSvg]][license]
 
 ## [README of English][readme]
 
@@ -38,20 +40,25 @@
 ## [Change Log][changeLog.md]
 
 
+## 打个小广告
+
+欢迎加入我的知识星球「**[基你太美](https://t.zsxq.com/FmeqfYF)**」学习 [AucFrame](https://blankj.com/2019/07/22/auc-frame/) 框架，目前一期内测已结束，二期已开，有兴趣进群的可以加我微信（备注：基你太美二期）。
+
+![我的二维码](https://raw.githubusercontent.com/Blankj/AndroidUtilCode/master/art/wechat.png)
+
 
 [logo]: https://raw.githubusercontent.com/Blankj/AndroidUtilCode/master/art/logo.png
 
-[aucSvg]: https://img.shields.io/badge/AndroidUtilCode-v1.22.2-brightgreen.svg
+[frame]: https://raw.githubusercontent.com/Blankj/AndroidUtilCode/master/art/auc_frame_cn.png
+
+[aucSvg]: https://img.shields.io/badge/AndroidUtilCode-v1.25.7-brightgreen.svg
 [auc]: https://github.com/Blankj/AndroidUtilCode
 
 [apiSvg]: https://img.shields.io/badge/API-14+-brightgreen.svg
-[api]: https://android-arsenal.com/api?level=14
+[result]: https://android-arsenal.com/result?level=14
 
 [buildSvg]: https://travis-ci.org/Blankj/AndroidUtilCode.svg?branch=master
 [build]: https://travis-ci.org/Blankj/AndroidUtilCode
-
-[insightSvg]: https://www.insight.io/repoBadge/github.com/Blankj/AndroidUtilCode
-[insight]: https://insight.io/github.com/Blankj/AndroidUtilCode
 
 [licenseSvg]: https://img.shields.io/badge/License-Apache--2.0-brightgreen.svg
 [license]: https://github.com/Blankj/AndroidUtilCode/blob/master/LICENSE
@@ -59,11 +66,11 @@
 [readme]: https://github.com/Blankj/AndroidUtilCode
 [readme-cn]: https://github.com/Blankj/AndroidUtilCode/blob/master/README-CN.md
 
-[utilcode]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README.md
-[utilcode-cn]: https://github.com/Blankj/AndroidUtilCode/blob/master/utilcode/README-CN.md
+[utilcode]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README.md
+[utilcode-cn]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/utilcode/README-CN.md
 
-[subutil]: https://github.com/Blankj/AndroidUtilCode/blob/master/subutil/README.md
-[subutil-cn]: https://github.com/Blankj/AndroidUtilCode/blob/master/subutil/README-CN.md
+[subutil]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/subutil/README.md
+[subutil-cn]: https://github.com/Blankj/AndroidUtilCode/blob/master/lib/subutil/README-CN.md
 
 [changeLog.md]: https://github.com/Blankj/AndroidUtilCode/blob/master/CHANGELOG.md
 
